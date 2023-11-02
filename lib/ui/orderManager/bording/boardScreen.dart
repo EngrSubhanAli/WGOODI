@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../theameConstants.dart';
-import '../../loginScreen.dart';
+import '../../useers/loginScreen.dart';
 import 'boardingWeigits.dart';
 
 class Boarding extends StatefulWidget {
@@ -41,12 +41,25 @@ class _BoardingState extends State<Boarding> {
 
           //Smoth page Indicator
           Container(
-              alignment: Alignment(0,0.7),
-              child: SmoothPageIndicator(controller: _controller, count: 2)),
+              alignment: Alignment(0,0.65),
+              child: SmoothPageIndicator(
+                controller: _controller, count: 2,
+                effect:  SlideEffect(
+                    spacing:  8.0,
+                    radius:  10.0,
+                    dotWidth:  34.0,
+                    dotHeight:  10.0,
+                    paintStyle:  PaintingStyle.fill,
+                    strokeWidth:  0.1,
+                    dotColor:  Colors.white,
+                    activeDotColor:  Colors.black,
+                ),
+
+              )),
 
           //Next Button
           Positioned(
-            bottom: 50,
+            bottom: 40,
             child: Container(
                 height: 50,
                 decoration: BoxDecoration(

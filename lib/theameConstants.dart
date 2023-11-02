@@ -9,6 +9,8 @@ Color darkcolor = const Color(0xFF465462);
 Color backgroundColor = const Color(0xFFFFFFFF);
 
 Color btnColor = const Color(0xFF90898E);
+Color connectorColor = Color(0xFF96ADC5);
+
 
 
 
@@ -31,6 +33,7 @@ InputDecorationTheme myInputDecorationTheme() {
   return InputDecorationTheme(
     contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
     hintStyle: myTextStylesmall,
+    labelStyle: myTextStylesmall.copyWith(fontWeight: FontWeight.bold),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(15),
       borderSide:  BorderSide(
@@ -39,3 +42,12 @@ InputDecorationTheme myInputDecorationTheme() {
     ),
   );
 }
+final List<BoxShadow>? shadow = [
+  BoxShadow(
+    color: Colors.grey,
+    spreadRadius: 0,
+    blurRadius: 5,
+    offset: Offset(0, 4), // changes position of shadow
+  ),
+];
+
