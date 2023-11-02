@@ -16,15 +16,15 @@ Color connectorColor = Color(0xFF96ADC5);
 
 // custom font style
 TextStyle myTextStylelarge = GoogleFonts.quicksand(
-  fontSize: 30,
+  fontSize: 30.sp,
   fontWeight: FontWeight.bold,
 );
 TextStyle myTextStylemedium = GoogleFonts.quicksand(
-  fontSize: 20,
+  fontSize: 20.sp,
   fontWeight: FontWeight.normal,
 );
 TextStyle myTextStylesmall = GoogleFonts.quicksand(
-  fontSize: 13,
+  fontSize: 13.sp,
   fontWeight: FontWeight.normal,
 );
 

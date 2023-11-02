@@ -30,15 +30,16 @@ Widget reservationDetails(BuildContext context){
           costomTextField("Balance Voloume","50",context),
           SizedBox(height: 10,),
           costomTextField("Required Volume","50",context),
-          SizedBox(height: 10,),
-          SizedBox(height: 10,),
+          SizedBox(height: 0.2.sh,),
           Row(
             children: [
               custom_button(context,0),
               SizedBox(width: 5,),
               ElevatedButton(onPressed: (){
                 stepCon.step(2);
-              }, child: Text("Place Order")),
+              }, child: Text("Place Order", style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+              )
+              ),
             ],
           )
 

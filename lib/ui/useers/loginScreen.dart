@@ -50,7 +50,26 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             _buildTopSection(),
             SizedBox(height: 5,),
+            Container(
+              margin: EdgeInsets.zero,
+              width: 0.9.sw,
+              height: 45.h,
+              decoration: BoxDecoration(
+                color: Color(0xFFEFE7EC),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Wrap(
+                alignment: WrapAlignment.spaceEvenly, // Adjust alignment as needed
+                children: [
+                  topButtons("Order Manager", orderManager, isOrderManager),
+                  topButtons("Station Manager", stationManager, isStationManager),
+                  topButtons("Driver", driver, isDriver),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
             _buildBottomSection(context),
+            SizedBox(height: 30.h,),
           ],
         ),
       ),
@@ -66,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
           width: Get.width,
           child: Image.asset("assets/images/logintop.png", fit: BoxFit.fill),
         ),
-
         Positioned(
           top: 50.h,
           child: Image.asset(
@@ -81,41 +99,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildBottomSection(BuildContext context) {
     return Container(
-      width: 0.9.sw,
-      margin: EdgeInsets.symmetric(horizontal: 15.w),
+
+      width: 0.85.sw,
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200,
-            offset: const Offset(0, 7),
-            blurRadius: 7,
-            spreadRadius: 3,
-          ),
-        ],
+        boxShadow: shadow,
         borderRadius: BorderRadius.circular(10.w),
       ),
-      padding: EdgeInsets.all(8),
+      // padding: EdgeInsets.all(8),
       child: Column(
         children: [
-          Container(
-            width: Get.width - 30,
-            height: 50.h,
-            decoration: BoxDecoration(
-              color: Color(0xFFEFE7EC),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Wrap(
-              alignment: WrapAlignment.spaceEvenly, // Adjust alignment as needed
-              children: [
-                topButtons("Order Manager", orderManager, isOrderManager),
-                topButtons("Station Manager", stationManager, isStationManager),
-                topButtons("Driver", driver, isDriver),
-              ],
-            ),
-          ),
-          SizedBox(height: 10,),
-
           Text(
             "Welcome Back",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23.sp, fontWeight: FontWeight.normal),
@@ -124,12 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
             "Use Credentials to access your account",
             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 15.sp, fontWeight: FontWeight.normal),
           ),
+          SizedBox(height: 25,),
           const SizedBox(height: 10),
           TextField(
             style: Theme.of(context).textTheme.bodySmall,
             decoration: InputDecoration(labelText: "Email"),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           TextField(
             style: Theme.of(context).textTheme.bodySmall,
             decoration: InputDecoration(
@@ -145,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             obscureText: _obscureText,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -165,22 +160,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Text("Forget Password?", style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold)),
             ],
           ),
-          const SizedBox(height: 30),
+           SizedBox(height: 35.h),
           ElevatedButton(onPressed: () {
             Get.to(()=>HomeScreen(),transition: Transition.rightToLeftWithFade,duration: Duration(milliseconds: 300));
           }, child: Text("Sign Up")),
+          SizedBox(height: 35.h),
         ],
       ),
     );
   }
   Widget topButtons(String name,onpress,bool active){
     return Container(
-        height:50.h,
+        height:45.h,
         child: ElevatedButton(
             style: ButtonStyle(
               elevation: MaterialStateProperty.all(0),
               backgroundColor: active
-                  ? MaterialStateProperty.all(btnColor)
+                  ? MaterialStateProperty.all(darkcolor)
                   : MaterialStateProperty.all(Color(0xFFEFE7EC)),
               padding: MaterialStateProperty.all(EdgeInsets.only(left: 7,right: 7)),
             ),

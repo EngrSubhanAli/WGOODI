@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 50.h,left: 10,right: 10,bottom: 10),
+              margin: EdgeInsets.only(top: 50.h,left: 20,right: 20,bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   ),
-                  SizedBox(height: 15.h),
                   _stations(),
 
                 ],
@@ -95,6 +94,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   Widget _stations(){
+    Color getRandomRedGreenBlueColor() {
+      final random = Random().nextInt(3); // Generate a random number between 0 and 2
+      switch (random) {
+        case 0:
+          return Colors.red;
+        case 1:
+          return Colors.green;
+        case 2:
+          return Colors.blue;
+        default:
+          return Colors.black; // A fallback color (optional)
+      }
+    }
     return Expanded(
       child: GestureDetector(
         onTap: (){
@@ -103,17 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView.builder(
           itemCount: 10,
           itemBuilder: (context, index) {
-            Color randomColor = Color.fromARGB(
-              255,
-              Random().nextInt(256),
-              Random().nextInt(256),
-              Random().nextInt(256),
-            );
+            Color randomColor = getRandomRedGreenBlueColor();
             return  Container(
               margin: EdgeInsets.only(bottom: 10.h),
               padding: EdgeInsets.all(8.h),
               decoration: BoxDecoration(
-                  color: darkcolor,
+                  color: randomColor,
                   borderRadius: BorderRadius.circular(10)
               ),
               height: 0.22.sh,
@@ -130,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text("abc",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: backgroundColor),),
                         ],
                       ),
-                      Icon(Icons.circle,color: randomColor,),
+                      Icon(Icons.star_outline,color: Colors.white,),
                     ],
                   ),
                   Row(

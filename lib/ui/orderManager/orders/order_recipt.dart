@@ -45,13 +45,17 @@ class _OrderReciptState extends State<OrderRecipt> {
                       SizedBox(height: 15.h),
                       Row(
                         children: [
-                          Text("Recipt Number: ",style: Theme.of(context).textTheme.bodyLarge,),
-                          Text("MD12313123",style: Theme.of(context).textTheme.bodyMedium,),
+                          Text("Recipt Number: ",style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 25
+                          ),),
+                          Text("MD12313123",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 17),),
                         ],
                       ),
+                      SizedBox(height: 30.h,),
                       Container(
-                        padding: EdgeInsets.only(left: 10,right: 10,bottom: 20),
-                        width: 0.9.sw,
+                        margin: EdgeInsets.only(left: 13,right: 13),
+                        padding: EdgeInsets.only(left: 20,right: 20,bottom: 20),
+                        width: 0.85.sw,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,

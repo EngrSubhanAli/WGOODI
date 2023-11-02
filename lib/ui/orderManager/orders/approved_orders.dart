@@ -52,7 +52,7 @@ class _ApprovedOrdersState extends State<ApprovedOrders> {
                           }, icon: Icon(Icons.filter_alt_outlined))
                         ],
                       ),
-                      SizedBox(height: 15,),
+                      SizedBox(height: 23.h,),
                       for(var i=0;i<6;i++)
                         GestureDetector(
                             onTap: (){
@@ -79,10 +79,10 @@ class _ApprovedOrdersState extends State<ApprovedOrders> {
   }
   Widget approvedOrders(){
     return Container(
-      margin: EdgeInsets.only(bottom: 30),
+      margin: EdgeInsets.only(bottom: 30,left: 15,right: 15),
       padding: EdgeInsets.only(left: 30,right: 10,top: 5),
       height: 0.18.sh,
-      width: 0.9.sw,
+      width: 0.85.sw,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: darkcolor,width: 1),
