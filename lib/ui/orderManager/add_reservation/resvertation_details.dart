@@ -3,11 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:petrol_pump/ui/orderManager/add_reservation/stepControlller.dart';
-
 import '../../../theameConstants.dart';
 var stepCon=Get.put(StepController());
 Widget reservationDetails(BuildContext context){
-  bool isactive=true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   return Container(
     width: 0.9.sw,
@@ -16,7 +14,7 @@ Widget reservationDetails(BuildContext context){
       boxShadow:shadow,
       borderRadius: BorderRadius.circular(10.w),
     ),
-    padding: EdgeInsets.all(7),
+    padding: EdgeInsets.all(15),
     child: Form(
       key: _formKey,
       child: Column(
@@ -25,52 +23,44 @@ Widget reservationDetails(BuildContext context){
 
           costomTextField("Gas Type","50",context),
           SizedBox(height: 10,),
-          costomTextField("UMO","50",context),
+          costomTextField("UMO","Liters",context),
           SizedBox(height: 10,),
-          costomTextField("Balance Voloume","50",context),
+          costomTextField("Balance Voloume","20,000",context),
           SizedBox(height: 10,),
-          costomTextField("Required Volume","50",context),
+          costomTextField("Required Volume","36,000",context),
           SizedBox(height: 0.2.sh,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               custom_button(context,0),
-              SizedBox(width: 5,),
               ElevatedButton(onPressed: (){
                 stepCon.step(2);
-              }, child: Text("Place Order", style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+              }, child: Text("Place Order", style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white,fontSize: 18.sp),
               )
               ),
             ],
-          )
-
+          ),
+          SizedBox(height: 20,)
         ],
       ),
     ),
   );
 }
-
 //Custom Button
 Widget custom_button(BuildContext context,index){
-  return Container(
-    width: 0.3.sw,
-    height: 40,
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.black, width: 1), // Set border properties
-      borderRadius: BorderRadius.circular(30), // Set border radius
-    ),
-    child: ElevatedButton(
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all(0), // Set elevation to 0
-        backgroundColor: MaterialStateProperty.all(Colors.white),
+  return GestureDetector(
+    onTap: (){
+      stepCon.step(0);
+    },
+    child: Container(
+      alignment: Alignment.center,
+      width: 0.27.sw,
+      height: .055.sh,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 1), // Set border properties
+        borderRadius: BorderRadius.circular(30), // Set border radius
       ),
-      onPressed: () {
-        stepCon.step(0);
-      },
-      child: Text(
-        "Cancel",
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: darkcolor),
-      ),
-
+      child: Text("Cancel",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: btnColor,fontWeight: FontWeight.bold),),
     ),
   );
 }
@@ -78,6 +68,7 @@ Widget custom_button(BuildContext context,index){
 Widget costomTextField(label_text,hint_text,BuildContext context){
   return TextFormField(
     decoration: InputDecoration(
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       labelText: "$label_text",
       hintText: "$hint_text" ,
       labelStyle: Theme.of(context).textTheme.bodySmall!.copyWith(

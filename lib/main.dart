@@ -1,17 +1,27 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:petrol_pump/theameConstants.dart';
-import 'package:petrol_pump/ui/orderManager/splashScreen.dart';
+import 'package:petrol_pump/ui/driver/home/order_request_Screen.dart';
 import 'package:get/get.dart';
+import 'package:petrol_pump/ui/orderManager/bording/boardScreen.dart';
+import 'package:petrol_pump/ui/useers/loginScreen.dart';
 
 void main() {
   runApp(
-    ScreenUtilInit(
-      designSize: Size(360, 640), // Set your design size
-      builder: (context, widget) => MaterialApp(
-        home: const MyApp(),
-      ),
-    ),
+    DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) =>  ScreenUtilInit(
+          designSize: Size(360, 640), // Set your design size
+          builder: (context, widget) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: const MyApp(),
+          ),
+        ),
+
+    )
+
   );
 }
 
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
          useMaterial3: true,
        ),
-       home: const SplashScreen(),
+       home: const Boarding(),
      );
   }
 }

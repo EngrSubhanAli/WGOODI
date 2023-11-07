@@ -16,6 +16,7 @@ class Boarding extends StatefulWidget {
 class _BoardingState extends State<Boarding> {
   final _controller = PageController();
   bool onlastPage=false;
+  var active=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _BoardingState extends State<Boarding> {
             onPageChanged: (index){
               setState(() {
                 onlastPage=(index==1);
-
+               active=index;
               });
             },
             controller: _controller,
@@ -44,19 +45,19 @@ class _BoardingState extends State<Boarding> {
               alignment: Alignment(0,0.65),
               child: SmoothPageIndicator(
                 controller: _controller, count: 2,
-                effect:  SlideEffect(
-                    spacing:  8.0,
-                    radius:  10.0,
-                    dotWidth:  34.0,
-                    dotHeight:  10.0,
-                    paintStyle:  PaintingStyle.fill,
-                    strokeWidth:  0.1,
-                    dotColor:  Colors.white,
-                    activeDotColor:  Colors.black,
+                effect:  ExpandingDotsEffect(
+                  spacing:  8.0,
+                  expansionFactor: 2,
+                  radius: 16.0,
+                  dotWidth:  25,
+                  dotHeight:  10.0,
+                  paintStyle:  PaintingStyle.fill,
+                  strokeWidth:  0.1,
+                  dotColor:  Colors.white,
+                  activeDotColor:  Colors.white,
                 ),
-
-              )),
-
+              )
+          ),
           //Next Button
           Positioned(
             bottom: 40,

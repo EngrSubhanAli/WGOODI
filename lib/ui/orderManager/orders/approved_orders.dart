@@ -2,82 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:petrol_pump/theameConstants.dart';
+import 'package:petrol_pump/ui/driver/consants.dart';
 import 'package:petrol_pump/ui/orderManager/orders/order_recipt.dart';
-
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/drwaer.dart';
-
-class ApprovedOrders extends StatefulWidget {
-  const ApprovedOrders({Key? key}) : super(key: key);
-
+import '../widgets/custom_btn.dart';
+import '../widgets/drwaer.dart';
+import 'controller.dart';
+class ApprovedOrdersScreen extends StatefulWidget {
+  const ApprovedOrdersScreen({Key? key}) : super(key: key);
   @override
-  State<ApprovedOrders> createState() => _ApprovedOrdersState();
+  State<ApprovedOrdersScreen> createState() => _ApprovedOrdersScreenState();
 }
-
-class _ApprovedOrdersState extends State<ApprovedOrders> {
-  bool isOpenDrwaer=false;
-  void toggledrawer(){
-    isOpenDrwaer=!isOpenDrwaer;
-    setState(() {
-    });
-  }
+class _ApprovedOrdersScreenState extends State<ApprovedOrdersScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  var orderfilter=Get.put(OrderedFilterController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          isOpenDrwaer=false;
-          setState(() {
-
-          });
-        },
-        child: Stack(
+      key: scaffoldKey,
+      drawer: CustomSideBar(),
+      body: Container(
+        margin: EdgeInsets.only(top: 30.h,left: 20,right: 20,bottom: 10),
+        child: ListView(
           children: [
-            Container(
-              margin: EdgeInsets.only(top: 50.h,left: 20,right: 20,bottom: 10),
-              child: ListView(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      custom_appbar(context,toggledrawer),
-                      SizedBox(height: 15.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Aproved Orders",style: Theme.of(context).textTheme.bodyLarge,),
-                          IconButton(onPressed: (){
-                            _bottomsheet(context);
-                          }, icon: Icon(Icons.filter_alt_outlined))
-                        ],
-                      ),
-                      SizedBox(height: 23.h,),
-                      for(var i=0;i<6;i++)
-                        GestureDetector(
-                            onTap: (){
-                              Get.to(()=>OrderRecipt(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
-                            },
-                            child: approvedOrders()
-                        ),
-
-                    ],
-                  )
-                  //Topbar
-
-                ],
-              ),
-            ),
-            isOpenDrwaer?Container(
-                width: Get.width*.75,
-                child: CustomSideBar()):Container(),
-
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                custom_appbar(context,scaffoldKey,"Orders Reports"),
+                SizedBox(height: 15.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Aproved Orders",style: Theme.of(context).textTheme.bodyLarge,),
+                    IconButton(onPressed: (){
+                      _bottomsheet(context);
+                    }, icon: Icon(Icons.filter_alt_outlined))
+                  ],
+                ),
+                SizedBox(height: 23.h,),
+                for(var i=0;i<6;i++)
+                  GestureDetector(
+                      onTap: (){
+                        Get.to(()=>OrderReciptScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
+                      },
+                      child: ApprovedOrdersScreen()
+                  ),
+              ],
+            )
+            //Topbar
           ],
         ),
       ),
     );
   }
-  Widget approvedOrders(){
+  Widget ApprovedOrdersScreen(){
     return Container(
       margin: EdgeInsets.only(bottom: 30,left: 15,right: 15),
       padding: EdgeInsets.only(left: 30,right: 10,top: 5),
@@ -99,7 +78,6 @@ class _ApprovedOrdersState extends State<ApprovedOrders> {
                     fontSize: 15,
                   ),),
                   Text("Rakan",style: Theme.of(context).textTheme.bodySmall!.copyWith(),),
-
                 ],
               ),
               Icon(Icons.arrow_forward_ios),
@@ -111,7 +89,6 @@ class _ApprovedOrdersState extends State<ApprovedOrders> {
               fontSize: 15,
             ),),
             Text("MJCD123",style: Theme.of(context).textTheme.bodySmall!.copyWith(),),
-
           ],),
           Row(children: [
             Text("Paid Amount: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -138,99 +115,69 @@ class _ApprovedOrdersState extends State<ApprovedOrders> {
       ),
     );
   }
-  ordered(){}
-  en_route(){}
-  dilvered(){}
-  approved(){}
-
-    _bottomsheet(BuildContext context){
+    Future _bottomsheet(BuildContext context){
       return showModalBottomSheet(context: context, builder: (_) {
-        return Container(
-          decoration: BoxDecoration(
-              color: darkcolor,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
-          ),
-          padding: EdgeInsets.all(20),
-          child: ListView(
-            padding: EdgeInsets.only(bottom: 20),
-            shrinkWrap: true,
-            children: [
-              //Divider
-              Center(
-                child: SizedBox(
-                  width: 100, // Set the desired width
-                  child: Divider(
-                    thickness: 2, // Set the desired thickness of the divider
-                    color: Colors.white, // Set the color of the divider
-                  ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Divider(thickness: 2),
-              SizedBox(height: 20,),
-              Container(
+        return GetBuilder(
+          init: orderfilter,
+          builder: (_) {
+            return Container(
+              decoration: BoxDecoration(
                   color: darkcolor,
-                  margin: EdgeInsets.all(15),
-                  alignment: Alignment.center,
-                  child: Text("Choose Your Filter",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),)),
-              //Data
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+              ),
+              child: ListView(
+                padding: EdgeInsets.only(bottom: 20),
+                shrinkWrap: true,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      custom_btn(onpress: ordered,title: "order",backgroudcolor1: Colors.white,textcolor: darkcolor),
-                      SizedBox(width: 20,),
-                      custom_btn(onpress: en_route,title: "En route",backgroudcolor1: btnColor,textcolor: backgroundColor),
-
-                    ],
+                  //Divider
+                  Center(
+                    child: SizedBox(
+                      width: 100, // Set the desired width
+                      child: Divider(
+                        thickness: 2, // Set the desired thickness of the divider
+                        color: Colors.white, // Set the color of the divider
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 30,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      custom_btn(onpress: dilvered,title: "Dilvered",backgroudcolor1: btnColor,textcolor: backgroundColor),
-                      SizedBox(width: 20,),
-                      custom_btn(onpress: approved,title: "Approved",backgroudcolor1: btnColor,textcolor: backgroundColor),
+                  SizedBox(height: 20.h,),
+                  Divider(thickness: 2),
+                  Container(
+                    width: 0.1.sw,
+                      margin: EdgeInsets.all(15),
+                      alignment: Alignment.center,
+                      child: Text("Choose Your Filter",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),)),
+                  SizedBox(height: 10,),
+                  //Data
+                  Container(
+                    width: 0.2.sw,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            custom_btn(onpress: orderfilter.ordered,title: "order",backgroudcolor1: orderfilter.orderbtn.value?btnColor:backgroundColor,textcolor: orderfilter.orderbtn.value?backgroundColor:textColor,context: context),
+                            custom_btn(onpress: orderfilter.en_route,title: "En route",backgroudcolor1: orderfilter.enroutebtn.value?btnColor:backgroundColor,textcolor: orderfilter.enroutebtn.value?backgroundColor:textColor,context: context),
+                          ],
+                        ),
+                        SizedBox(height: 30,),
+                        Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            custom_btn(onpress: orderfilter.dilvered,title: "Dilvered",backgroudcolor1: orderfilter.dilveredbtn.value?btnColor:backgroundColor,textcolor: orderfilter.dilveredbtn.value?backgroundColor:textColor,context: context),
+                            custom_btn(onpress: orderfilter.approved,title: "Approved",backgroudcolor1: orderfilter.approvedbtn.value?btnColor:backgroundColor,textcolor: orderfilter.approvedbtn.value?backgroundColor:textColor,context: context),
+                          ],
+                        )
 
-
-                    ],
+                      ],
+                    ),
                   )
-
                 ],
-              )
-            ],
-          ),
+              ),
+            );
+          }
         );
       });
-    }
-    Widget custom_btn({required onpress,required title,Color? backgroudcolor1,Color? textcolor}){
-    return Container(
-      width: .37.sw,
-      height: 40,
-      decoration: BoxDecoration(
-        color: backgroudcolor1,
-        borderRadius: BorderRadius.circular(10), // Set border radius
-      ),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: backgroudcolor1==Colors.white?MaterialStatePropertyAll(Colors.white):MaterialStatePropertyAll(btnColor),
-          elevation: MaterialStateProperty.all(0), // Set elevation to 0
-        ),
-        onPressed: onpress,
-        child: Row(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textcolor),
-            ),
-          ],
-        ),
-      ),
-    );
     }
 
   }

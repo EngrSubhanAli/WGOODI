@@ -16,6 +16,10 @@ dependencies:
   get:
   flutter_screenutil: ^5.9.0
   smooth_page_indicator: ^1.1.0
+  device_preview: ^1.1.0
+  google_maps_flutter: ^2.5.0
+  flutter_polyline_points:
+  location:
 
 dev_dependencies:
   flutter_test:
@@ -26,7 +30,6 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

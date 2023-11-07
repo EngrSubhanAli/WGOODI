@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:petrol_pump/theameConstants.dart';
 import 'package:petrol_pump/ui/orderManager/home/homeScreen.dart';
-import 'package:petrol_pump/ui/orderManager/notifications/notification.dart';
+import 'package:petrol_pump/ui/orderManager/notifications/notificationScreen.dart';
 import 'package:petrol_pump/ui/orderManager/orders/approved_orders.dart';
 class CustomSideBar extends StatefulWidget {
   CustomSideBar({Key? key}) : super(key: key);
@@ -13,71 +13,73 @@ class CustomSideBar extends StatefulWidget {
 class _CustomSideBarState extends State<CustomSideBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 30.h,left: 20,right: 20),
-      color: darkcolor,
-      child: Column(
-        children: [
-          Image.asset("assets/images/drawerlogo.png"),
-          ListTile(
-            onTap: (){
-              Get.to(()=>HomeScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
-            },
-            title: Text("Home",style:
-            Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
-            trailing: Icon(
-              Icons.arrow_forward, // You can change this icon to the one you prefer
-              color: backgroundColor,
+    return Drawer(
+      child: Container(
+        padding: EdgeInsets.only(top: 30.h,left: 20,right: 20),
+        color: darkcolor,
+        child: Column(
+          children: [
+            Image.asset("assets/images/drawerlogo.png"),
+            ListTile(
+              onTap: (){
+                Get.to(()=>HomeScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
+              },
+              title: Text("Home",style:
+              Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
+              trailing: Icon(
+                Icons.arrow_forward, // You can change this icon to the one you prefer
+                color: backgroundColor,
+              ),
             ),
-          ),
-          Divider(thickness: 4),
-          SizedBox(height: 10,),
-          ListTile(
-            onTap: (){
-              Get.to(()=>ApprovedOrders(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
-            },
-            title: Text("Report",style:
-            Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,)),
-            trailing: Icon(
-              Icons.arrow_forward, // You can change this icon to the one you prefer
-              color: backgroundColor,
+            Divider(thickness: 4),
+            SizedBox(height: 10,),
+            ListTile(
+              onTap: (){
+                Get.to(()=>ApprovedOrdersScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
+              },
+              title: Text("Report",style:
+              Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,)),
+              trailing: Icon(
+                Icons.arrow_forward, // You can change this icon to the one you prefer
+                color: backgroundColor,
+              ),
             ),
-          ),
-          Divider(thickness: 4),
-          SizedBox(height: 10,),
-          ListTile(
-            onTap: (){
-              Get.to(()=>NoticationScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
-            },
-            title: Text("Notification",style:
-            Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
-            trailing: Icon(
-              Icons.arrow_forward, // You can change this icon to the one you prefer
-              color: backgroundColor,
-            ),
+            Divider(thickness: 4),
+            SizedBox(height: 10,),
+            ListTile(
+              onTap: (){
+                Get.to(()=>NoticationScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
+              },
+              title: Text("Notification",style:
+              Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
+              trailing: Icon(
+                Icons.arrow_forward, // You can change this icon to the one you prefer
+                color: backgroundColor,
+              ),
 
-          ),
-          Divider(thickness: 4),
-          SizedBox(height: 10,),
-          Expanded(
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              margin: EdgeInsets.only(top: 50,bottom: 50), // Adjust the top margin to move it to the bottom
-              child: ListTile(
-                onTap: (){
-                  _bottomsheet(context);
-                },
-                title: Text("LogOut",style:
-                Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
-                trailing: Icon(
-                  Icons.login, // You can change this icon to the one you prefer
-                  color: backgroundColor,
+            ),
+            Divider(thickness: 4),
+            SizedBox(height: 10,),
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                margin: EdgeInsets.only(top: 50,bottom: 50), // Adjust the top margin to move it to the bottom
+                child: ListTile(
+                  onTap: (){
+                    _bottomsheet(context);
+                  },
+                  title: Text("LogOut",style:
+                  Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor,fontWeight: FontWeight.bold,),),
+                  trailing: Icon(
+                    Icons.login, // You can change this icon to the one you prefer
+                    color: backgroundColor,
+                  ),
                 ),
               ),
             ),
-          ),
-          // Add more items to the Drawer here
-        ],
+            // Add more items to the Drawer here
+          ],
+        ),
       ),
     );
   }

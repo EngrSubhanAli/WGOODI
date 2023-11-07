@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/drwaer.dart';
+import '../widgets/drwaer.dart';
 
 class NoticationScreen extends StatefulWidget {
   const NoticationScreen({Key? key}) : super(key: key);
@@ -13,52 +12,33 @@ class NoticationScreen extends StatefulWidget {
 }
 
 class _NoticationScreenState extends State<NoticationScreen> {
-  bool isOpenDrwaer=false;
-  void toggledrawer(){
-    isOpenDrwaer=!isOpenDrwaer;
-    setState(() {
-    });
-  }
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 
-    @override
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          isOpenDrwaer=false;
-          setState(() {
-
-          });
-        },
-        child: Stack(
+      key: scaffoldKey,
+      drawer: CustomSideBar(),
+      body: Container(
+        margin: EdgeInsets.only(top: 30.h,left: 20,right: 20,bottom: 10),
+        child: ListView(
           children: [
-            Container(
-              margin: EdgeInsets.only(top: 50.h,left: 20,right: 20,bottom: 10),
-              child: ListView(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      custom_appbar(context,toggledrawer),
-                      SizedBox(height: 15.h),
-                      Text("General Notificatons",style: Theme.of(context).textTheme.bodyLarge,),
-                      SizedBox(height: 15,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                custom_appbar(context,scaffoldKey,"Notifications"),
+                SizedBox(height: 15.h),
+                Text("General Notificatons",style: Theme.of(context).textTheme.bodyLarge,),
+                SizedBox(height: 15,),
 
-                      for(var i=0;i<6;i++)
-                        _notificaions()
+                for(var i=0;i<6;i++)
+                  _notificaions()
 
-                    ],
-                  )
-                  //Topbar
-
-                ],
-              ),
-            ),
-            isOpenDrwaer?Container(
-                width: Get.width*.75,
-                child: CustomSideBar()):Container(),
+              ],
+            )
+            //Topbar
 
           ],
         ),

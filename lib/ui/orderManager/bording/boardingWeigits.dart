@@ -19,7 +19,7 @@ Widget boardingScreenOne(BuildContext context) {
         children: [
           Container(
             width: 1.sw, // Use sw for width and sh for height
-            height: 0.65.sh,
+            height: 0.6.sh,
             child: Image.asset(
               "assets/images/boardingbtm.png",
               fit: BoxFit.fill,
@@ -74,7 +74,7 @@ Widget boardingScreentwo(BuildContext context) {
         children: [
           Container(
             width: 1.sw,
-            height: 0.65.sh,
+            height: 0.625.sh,
             child: Image.asset(
               "assets/images/boardingbtm.png",
               fit: BoxFit.fill,
@@ -90,7 +90,7 @@ Widget boardingScreentwo(BuildContext context) {
           children: [
             SizedBox(height: 10.h),
             Text(
-              "Truck Driver",
+              "Check Order Report",
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Colors.white,
               ),

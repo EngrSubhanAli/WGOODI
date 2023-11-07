@@ -1,13 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:petrol_pump/models/station_manager.dart';
 import 'package:petrol_pump/theameConstants.dart';
-
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/drwaer.dart';
 import '../add_reservation/resverationSteper.dart';
+import '../widgets/drwaer.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,161 +17,171 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isOpenDrwaer=false;
-  void toggledrawer(){
-    isOpenDrwaer=!isOpenDrwaer;
-    setState(() {
-    });
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  Map<int, bool> star = {};
+  Map<int, bool> add_favorite = {};
+  List <StationManagerModel> stationmanger=[];
 
-  }
+  List<Color> colors = [
+    Colors.green,
+    Colors.blue,
+    Colors.green,
+    Colors.red,
+    Colors.red,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          isOpenDrwaer=false;
-          setState(() {
-
-          });
-        },
-        child: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 50.h,left: 20,right: 20,bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //Topbar
-                  custom_appbar(context,toggledrawer),
-                  SizedBox(height: 15.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Station", style: Theme.of(context).textTheme.bodyLarge!),
-                      Row(
-                        children: [
-                          Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 1), // Set border properties
-                              borderRadius: BorderRadius.circular(30), // Set border radius
+      key: scaffoldKey,
+      drawer: CustomSideBar(),
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 30.h,left: 20,right: 20,bottom: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //appbar
+                custom_appbar(context,scaffoldKey,"Home"),
+                SizedBox(height: 15.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Station", style: Theme.of(context).textTheme.bodyLarge!),
+                    Row(
+                      children: [
+                        Container(
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1), // Set border properties
+                            borderRadius: BorderRadius.circular(30), // Set border radius
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Get.to(()=>ReservationScreen(),transition: Transition.rightToLeftWithFade,duration: Duration(milliseconds: 300));
+                            },
+                            child: Text(
+                              "favorites",
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: darkcolor),
                             ),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(()=>ReservationScreen(),transition: Transition.rightToLeftWithFade,duration: Duration(milliseconds: 300));
-
-                              },
-                              child: Text(
-                                "favorites",
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: darkcolor),
-                              ),
-                              style: ButtonStyle(
-                                elevation: MaterialStateProperty.all(0), // Set elevation to 0
-                                backgroundColor: MaterialStateProperty.all(Colors.white),
-                              ),
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0), // Set elevation to 0
+                              backgroundColor: MaterialStateProperty.all(Colors.white),
                             ),
                           ),
-                          IconButton(onPressed: (){
-                            _bottomsheet(context);
+                        ),
+                        IconButton(onPressed: (){
+                          _bottomsheet(context);
 
-                          }, icon: Icon(Icons.filter_alt_outlined)),
-                        ],
-                      )
-                    ],
-                  ),
-                  _stations(),
-
-                ],
-              ),
+                        }, icon: Icon(Icons.filter_alt_outlined)),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 20,),
+                _stations(),
+              ],
             ),
-            isOpenDrwaer?Container(
-                width: Get.width*.75,
-                child: CustomSideBar()):Container(),
-
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
   Widget _stations(){
-    Color getRandomRedGreenBlueColor() {
-      final random = Random().nextInt(3); // Generate a random number between 0 and 2
-      switch (random) {
-        case 0:
-          return Colors.red;
-        case 1:
-          return Colors.green;
-        case 2:
-          return Colors.blue;
-        default:
-          return Colors.black; // A fallback color (optional)
-      }
-    }
-    return Expanded(
-      child: GestureDetector(
-        onTap: (){
-          Get.to(()=>ReservationScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
-        },
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            Color randomColor = getRandomRedGreenBlueColor();
-            return  Container(
-              margin: EdgeInsets.only(bottom: 10.h),
-              padding: EdgeInsets.all(8.h),
-              decoration: BoxDecoration(
-                  color: randomColor,
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              height: 0.22.sh,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text("Station Name: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),),
-                          Text("abc",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: backgroundColor),),
-                        ],
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=>ReservationScreen(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
+      },
+
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: dummyStations.length,
+        itemBuilder: (context,index){
+          final station = dummyStations[index];
+          return Container(
+            margin: EdgeInsets.only(bottom: 10.h),
+            padding: EdgeInsets.all(8.h),
+            decoration: BoxDecoration(
+                color: colors[index],
+
+                borderRadius: BorderRadius.circular(10)
+            ),
+            height: 0.26.sh,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Station Name: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),),
+                        Container(
+                            margin: EdgeInsets.only(top: 5),
+                            child: Text(station.stationName,style: Theme.of(context).textTheme.bodySmall!.copyWith(color: backgroundColor,fontSize: 15),)),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          // station.status==Status.active;
+                          // if (station.status == Status.active) {
+                          //   station.status = Status.active;
+                          // } else {
+                          //   station.status = Status.pending;
+                          // }
+                          star[index] = !(star[index] ?? false);
+                          add_favorite[index] = star[index]!;
+                          setState(() {
+
+                          });
+                        });
+                      },
+                      child: Icon(
+                          Icons.star,
+                          color: add_favorite[index] == true ? darkcolor : Colors.white
                       ),
-                      Icon(Icons.star_outline,color: Colors.white,),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Last Order: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),),
-                      Text("21/sep/2023",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: backgroundColor),),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("91: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.bold,color: backgroundColor)),
-                      Text("40000/30000 ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.normal,color: backgroundColor)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("91: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.bold,color: backgroundColor)),
-                      Text("40000/30000 ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.normal,color: backgroundColor)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("D: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.bold,color: backgroundColor)),
-                      Text("40000/30000 ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15,fontWeight: FontWeight.normal,color: backgroundColor)),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Last Order: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: backgroundColor),),
+                    Text(station.lastOrder,style: Theme.of(context).textTheme.bodySmall!.copyWith(color: backgroundColor),),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("${station.fuelType.toString().split(".").last}: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.bold, color: backgroundColor)),
+                    Text("${station.prices[station.fuelType]}",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.normal, color: backgroundColor)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("${station.fuelType.toString().split(".").last}: ",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.bold, color: backgroundColor)),
+                    Text("${station.prices[station.fuelType]}", style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.normal, color: backgroundColor)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("${station.fuelType.toString().split(".").last}: ", style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.bold, color: backgroundColor)),
+                    Text("${station.prices[station.fuelType]}", style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15, fontWeight: FontWeight.normal, color: backgroundColor)),
+
+                  ],
+                ),
 
 
-                ],
-              ),
-            );
-          },
-        ),
+              ],
+            ),
+          );
+        },
       ),
+
     );
   }
   _bottomsheet(BuildContext context){
@@ -183,7 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         padding: EdgeInsets.all(20),
         child: ListView(
-          padding: EdgeInsets.only(bottom: 20),
           shrinkWrap: true,
           children: [
             //Divider
@@ -209,11 +218,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _buttom_bottons("Healthy",4,Colors.green),
+                _buttom_bottons("Healthy",4, Color(0xFF2EB100)),
                 SizedBox(height: 10,),
-                _buttom_bottons("Be Ready",4,Colors.blue),
+                _buttom_bottons("Be Ready",4,Color(0xFF6877DC)),
                 SizedBox(height: 10,),
-                _buttom_bottons("Make Order",4,Colors.red),
+                _buttom_bottons("Make Order",4,Color(0xFFC93D33)),
                 SizedBox(height: 20,),
               ],
             )

@@ -1,59 +1,62 @@
+
+  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:petrol_pump/ui/orderManager/add_reservation/stepControlller.dart';
+import 'package:petrol_pump/ui/orderManager/add_reservation/resvertation_details.dart';
+
 import '../../widgets/custom_botton.dart';
-class AddResvervation extends StatefulWidget {
 
-  AddResvervation({Key? key}) : super(key: key);
 
-  @override
-  State<AddResvervation> createState() => _AddResvervationState();
-}
+   void add_buying_recipt(){}
 
-class _AddResvervationState extends State<AddResvervation> {
-  var stepCon=Get.put(StepController());
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  add_buying_recipt(){}
-  @override
-  Widget build(BuildContext context) {
-    return  Form(
+  Widget addReservation(BuildContext context,_formKey) {
+    return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          costomTextField("Order Number","50"),
-          SizedBox(height: 10,),
-          costomTextField("Station Number","Select Station Number"),
-          SizedBox(height: 10,),
-          costomTextField("Resvertation Date","50"),
-          SizedBox(height: 10,),
-          costomTextField("Recipt Number","50"),
-          SizedBox(height: 10,),
-          costomTextField("paid Amount","50"),
-          SizedBox(height: 10,),
-          costomTextField("Add Excepted Date","50"),
-          SizedBox(height: 10,),
-          costomTextField("Select start Point","50"),
-          SizedBox(height: 10,),
-          costomTextField("Add Amount","50"),
-          SizedBox(height: 10,),
-          costomTextField("Driver","50"),
-          SizedBox(height: 10,),
-          custom_botton1(context,icon: Icons.add,titile: "DownLoad Recipt",onpress:add_buying_recipt ),
-          SizedBox(height: 10,),
-          ElevatedButton(onPressed: (){
-            stepCon.step(1);
-            setState(() {
-              print(stepCon.currentstep);
-            });
-          }, child: Text("Coninue"))
-        ],
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            costomTextField("Order Number","50",context),
+            SizedBox(height: 10,),
+            costomTextField("Station Number","Select Station Number",context),
+            SizedBox(height: 10,),
+            costomTextField("Resvertation Date","21-sep-2023",context),
+            SizedBox(height: 10,),
+            costomTextField("Recipt Number","Add Recipt Number",context),
+            SizedBox(height: 10,),
+            costomTextField("paid Amount","Add Amount",context),
+            SizedBox(height: 10,),
+            costomTextField("Add Excepted Date","Add Excepted Date",context),
+            SizedBox(height: 10,),
+            costomTextField("Select start Point","Select Star point",context,Icon(Icons.keyboard_arrow_down_sharp)),
+            SizedBox(height: 10,),
+            costomTextField("Add Amount","Add Amount",context),
+            SizedBox(height: 10,),
+            costomTextField("Driver","Select Driver",context,Icon(Icons.keyboard_arrow_down_sharp)),
+            SizedBox(height: 10,),
+            custom_botton1(context,icon: Icons.add,titile: "Add Buying Recipt",onpress:add_buying_recipt ),
+            SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: (){
+                  stepCon.step(1);
+                }, child: Text("   Next   ")),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
-  Widget costomTextField(label_text,hint_text){
+
+  Widget costomTextField(label_text,hint_text,context,[Icon? icon]){
     return TextFormField(
       decoration: InputDecoration(
+        suffixIcon: icon != null ? IconButton(
+          icon: icon,
+          onPressed: (){},
+        ) : null,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: "$label_text",
         hintText: "$hint_text" ,
         labelStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -64,4 +67,4 @@ class _AddResvervationState extends State<AddResvervation> {
       style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 15),
     );
   }
-}
+
